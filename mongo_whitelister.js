@@ -18,6 +18,7 @@ accessListPromise = () => {
       if(err){
         reject(err)
       }else{
+        console.log(2);
         resolve(body)
       }
     })
@@ -27,4 +28,3 @@ accessListPromise = () => {
 accessListPromise()
   .then((successResponse) => { console.log(successResponse) })
   .catch((errResponse) => { console.log(errResponse) })
-
