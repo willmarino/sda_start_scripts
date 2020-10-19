@@ -1,7 +1,7 @@
 const axios = require('axios');
-require('dotenv').config();
+const config = require('./config/secrets');
 
-const mongoGroupID = process.env.MONGO_GROUPID;
+const mongoGroupID = config.mongoGroupID;
 axios.get(`/groups/${mongoGroupID}/accessList`)
   .then((successResp) => { console.log(`success: ${successResp}`) })
   .catch((errorResp) => { console.log(`error: ${errorResp}`) })
