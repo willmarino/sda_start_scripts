@@ -12,10 +12,19 @@ const options = {
   }
 }
 
-request(options, (err, resp, body) => {
-  console.log(`err is ${err}`)
-  console.log(`resp is ${resp}`)
-  console.log(`body is ${body}`)
-})
+accessListPromise = () => {
+  return new Promise((resolve, reject) => {
+    request(options, (err, resp, body) => {
+      if(err){
+        reject(err)
+      }else{
+        resolve(body)
+      }
+    })
+  })
+}
 
+accessListPromise()
+  .then((successResponse) => { console.log(successResponse) })
+  .catch((errResponse) => { console.log(errResponse) })
 
