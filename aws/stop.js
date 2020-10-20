@@ -12,7 +12,7 @@ const params = {
 
 const ec2 = new AWS.EC2();
 
-ec2.stopInstances(params, (err, data) =>{
+ec2.stopInstances(params, (err, data) => {
   if(err){
     console.log(`err is: ${err}`);
   }else{

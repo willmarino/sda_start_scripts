@@ -12,12 +12,24 @@ const params = {
 
 const ec2 = new AWS.EC2();
 
-ec2.startInstances(params, (err, data) =>{
-  if(err){
-    console.log(`err is: ${err}`);
-  }else{
-    console.log(data);
-  }
-})
+const startInstancesPromise = () => {
+  return new Promise((resolve, reject) => {
+    ec2.startInstances(params, (err, data) =>{
+      if(err){
+        reject(err)
+      }else{
+        console.log('bootup initiated...');
+        resolve(data)
+      }
+    })
 
-console.log('aws servers have been started');
+  })
+}
+
+const bootUp = async () => {
+  const res = await startInstancesPromise()
+}
+
+module.exports = {
+  bootUp
+}

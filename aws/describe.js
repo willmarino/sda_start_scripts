@@ -16,6 +16,7 @@ const describeInstancesPromise = () => {
       if(err){
         reject(err);
       }else{
+        console.log(data.Reservations[0].Instances);
         const newDNSAddresses = {}
         data.Reservations.forEach((instanceObj) => {
           const currentKey = instanceObj.Instances[0].KeyName
@@ -28,11 +29,17 @@ const describeInstancesPromise = () => {
 }
 
 const getIPAddresses = async () => {
-  const res = await describeInstancesPromise();
-  console.log(res);
+  let ready = false;
+  const descriptionInterval = setInterval( async () => {
+    const res = await describeInstancesPromise();
+    ready = Object.values(res).every((val) => val);
+    if(ready){
+      clearInterval(descriptionInterval);
+    }
+  }, 10000)
 }
 
-awaiter();
+getIPAddresses()
 
 module.exports = {
   getIPAddresses
