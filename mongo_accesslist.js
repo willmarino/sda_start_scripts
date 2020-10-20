@@ -18,13 +18,26 @@ accessListPromise = () => {
       if(err){
         reject(err)
       }else{
-        console.log(2);
         resolve(body)
       }
     })
   })
 }
 
-accessListPromise()
-  .then((successResponse) => { console.log(successResponse) })
-  .catch((errResponse) => { console.log(errResponse) })
+const getOldCIDRs = async () => {
+  const oldCIDRs = []
+  const accessList = await accessListPromise();
+  console.log('aight')
+  JSON.parse(accessList).results.forEach((alEntry) => {
+    if(config.mongoAccessListEntryNames.includes(alEntry.comment)){
+      oldCIDRs.push(alEntry.cidrBlock);
+    }
+  })
+  return oldCIDRs;
+}
+
+getOldCIDRs();
+
+module.exports = {
+  getOldCIDRs
+}
